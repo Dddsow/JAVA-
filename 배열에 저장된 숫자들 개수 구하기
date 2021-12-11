@@ -1,0 +1,20 @@
+class ArrayEx{
+    public static void main(String[]args){
+      int []numArr = new int[10];
+      int []counter = new int[10];
+      
+      for(int i=0;numArr.length;i++){
+          numArr[i] = (int)(Math.random()*10);  //numArr에다가 0-9까지 랜덤의 수를 numArr[0]부터 numArr[9]까지 저장
+          System.out.print(numArr[i]); //numArr[0]부터 numArr[9]까지 출력
+      }
+      System.out.println();
+      
+      for(int i-0;i<numArr.length;i++){
+          counter(numArr[i])++;  //예를 들어 numArr[0]=4 이면 counter[4]에 카운터가 1 이 올라가 counter[4]=1 로 바뀌어서 저장.
+      }
+      
+      for(int i=0;i<numArr.length;i++){
+          System.out.println( i + "의 개수 : " + counter[i]);  //0의개수:counter[0] 출력 1의개수:counter[1] 출력 순서대로 9의개수까지 아마 출력될것임.
+      }
+  }
+}
