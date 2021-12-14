@@ -1,0 +1,26 @@
+import java.util.*;   //scanner함수를 사용하기 위해 추가
+
+class MultiArrEx4{
+    public static void main(String []args){
+        String [][] words = {
+            {"chair","의자"},
+            {"computer","컴퓨터"},
+            {"integer","정수"}       //2차원 문자열 배열을 생성 
+       };
+       
+       Scanner scanner = new scanner(System.in);  //scanner를 사용하기 위한 명령어
+       
+       for(int i=0;i<words.length;i++){        // 첫번째부터 2차원배열 words의 행의 끝까지 반복 즉 words는 3행2열이기때문에 words.length는 3  / 0,1,2 3번시도
+           System.out.printf("Q%d. %s의뜻은?",i+1,words[i][0]); //chair 출력 computer integer 순서
+           
+           String tmp = scanner.nextLine(); //tmp에다가 문자열 저장
+           
+           if(tmp.equals(words[i][0]){ //문자열1.equals(문자열2)은 문자열1과 문자열2가 같은지 판단해주는 명령어 tmp에 사용자가 입력한 문자열이 맞으면 정답이라고 출력 아니면 else안에 문장출력
+              System.out.printf("정답입니다."%n%n);
+           }
+           else{
+              System.out.printf("틀렸습니다. 정답은 %s입니다.%n%n",words[i][1]);
+           }
+      }
+   }
+}
