@@ -1,0 +1,36 @@
+class MultiArrEx3{
+    public static void main(String [] args){
+      int [][] m1 = {   //2행3열의 m1
+        {1,2,3},
+        {4,5,6}
+      };
+      
+      int [][] m2 = {   //3행2열의 m2
+        {1,2},
+        {3,4},
+        {5,6}
+      };
+      
+      final int ROW = m1.length;  //m1의 행의길이를 상수 (2)
+      final int COL = m2[0].length; //m2의 열의길이를 상수 (2)
+      final int M2_ROW = m2.length; //m2의 행의길이를 상수(3)
+      
+      int [][] m3 = new int[ROW][COL]; //m1*m2로 만들어진 m3의 행렬을 설정 ROW,COL은 각각 2
+      
+      for(int i=0;i<ROW;i++)
+          for(int j=0;j<COL;j++)
+              for(int k=0;k<M2_ROW;k++)
+                m3[i][j] += m1[i][j]*m2[j][k]; //행렬의곱을 m3에다가 저장
+                
+                
+      for(int i=0;i<ROW;i++)
+          for(int j=0;j<COL;j++)
+              System.out.printf("%3d ",m3[i][j]);     //행렬 순서대로 출력 즉, 결과값임.
+          }
+          System.out.println();
+     }
+  }
+} 
+  
+      
+          
