@@ -1,0 +1,53 @@
+import java.util.*;
+
+class MultiArrEx2{
+    public static void main(String [] args){
+        final int SIZE = 5;
+        int x = 0 , y = 0 , num = 0;
+        
+        int [] [] bingo = new int[SIZE][SIZE]; //SIZE 만 변경해도 빙고의 크기를 바꿀 수 있게 2차원배열을 설정
+        Scanner scanner = new Scanner(System.in); //scanner를 사용하기 위한 명령어
+        
+        
+       for(int i=0;i<SIZE;i++)
+           for(int j=0;j<SIZE;j++)
+               bingo[i][j] = i*SIZE + j + 1;  //빙고를 하는데 SIZE에 맞게 예를 들어 SIZE가 5라면 1부터 25까지 수를 채워넣음.
+                
+                
+        for(int i=0;i<SIZE;i++){
+            for(int j=0;j<SIZE;j++){
+                x=(int)(Math.random()*SIZE);
+                y=(int)(Math.random()*SIZE);
+                
+                int tmp = bingo[i][j];
+                bingo[i][j] = bingo[x][y];
+                bingo[x][y] = tmp;           //빙고의 숫자를 무작위로 하나 뽑아서 그 숫자랑 i,j에 맞는 숫자를 바꿔줌 시도횟수는 SIZE*SIZE
+           }
+       }
+       
+       do{
+          for(int i=0;i<SIZE;i++){
+             for(int j=0;j<SIZE;j++)
+                 System.out.printf("%2d ",bingo[i][j]);
+             System.out.println();
+          } 
+          System.out.println();
+          
+          System.out.printf("1 ~ %d의 숫자를 입력하세요.(종료:0)>", SIZE*SIZE);
+          String tmp= scanner.nextLine();
+          num = Integer.parseInt(tmp); //문자열로 받았기 떄문에 Integer.parseInt로 int형으로 바꿔준뒤 num에 저장 
+          
+          outer:  //outer을 설정하여 if문에서 break을 맞았을때 outer 밖으로 빠져나오게 설정
+          for(int i=0;i<SIZE;i++){
+              for(int j=0;j<SIZe;j++){
+                  if(bingo[i][j] == num){
+                      bingo[i][j] = 0;
+                      break outer;
+                  }
+              }
+         }
+      }while(num!=0);  //do-while문 섞인 빙고판을 한 번 출력 후 사용자에게 숫자하나를 입력받아서 그 숫자에 맞는 빙고판의 수를 0으로 치환해준다.
+   }
+}
+          
+                
