@@ -39,7 +39,7 @@ class MultiArrEx2{
           
           outer:  //outer을 설정하여 if문에서 break을 맞았을때 outer 밖으로 빠져나오게 설정
           for(int i=0;i<SIZE;i++){
-              for(int j=0;j<SIZe;j++){
+              for(int j=0;j<SIZE;j++){
                   if(bingo[i][j] == num){
                       bingo[i][j] = 0;
                       break outer;
