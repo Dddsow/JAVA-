@@ -1,0 +1,32 @@
+class CardTest{
+    public static void main(String [] args){
+      System.out.println("Card.width = " + Card.width);
+      System.out.println("Card.height = " + Card.height); //클래스변수(static변수)는 객체생성없이 '클래스이름.클래스변수'로 직접 사용 가능하다. 그 자체가 class이기 때문이다. 
+      
+      Card c1 = new Card(); //Card클래스의 객체 c1을 생성 
+      c1.kind = "Heart"; //참조변수 
+      c1.number = 7;
+      
+      Card c2 = new Card(); //Card클래스의 객체 c2를 생성
+      c2.kind = "Spade";
+      c2.number = 4;
+      
+      System.out.println("c1은 " + c1.kind + " , " + c1.number + "이며, 크기는 (" + c1.width + ", " + c1.height + ")" ); // heart 7 100 250
+      System.out.println("c2은 " + c2.kind + " , " + c2.number + "이며, 크기는 (" + c2.width + ", " + c2.height + ")" ); //spade 4 100 250
+      
+      System.out.println("c1의 width와 height를 각각 50,80으로 변경합니다.");
+      c1.width = 50;  //c1,c2둘 다 같은 클래스인 Card에서 나온 객체이기 때문에 c1.width를 변경하면 c2.width도 바뀔 수 밖에 없다. Card클래스 안에 width와height를 변경하는 것이기 때문이다.
+      c1.height = 80;
+      
+      System.out.println("c1은 " + c1.kind + " , " + c1.number + "이며, 크기는 (" + c1.width + ", " + c1.height + ")" );  //width와height 는 각각 50,80으로 바뀌었다.
+      System.out.println("c2은 " + c2.kind + " , " + c2.number + "이며, 크기는 (" + c2.width + ", " + c2.height + ")" );
+      
+      }
+}
+
+class Card{
+    String kind;  //인스턴스변수
+    int number; //인스턴스변수
+    static int width = 100; //클래스 변수 static이 붙었다.
+    static int height = 250; //클래스 변수 static이 붙었다.
+}
