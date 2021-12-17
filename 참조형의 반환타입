@@ -1,0 +1,19 @@
+class Data { int x; }
+
+class ReferenceReturnEx{
+    public static void main(String [] args){
+        Data d = new Data(); //Data 클래스의 객체 d 생성
+        d.x = 10;
+        
+        Data d2 = copy(d); //Data 클래스의 객체d2 를 copy(d)라는 메서드를 이용해 생성
+        System.out.println("d.x =" + d.x);
+        System.out.println("d2.x =" + d2.x);
+    }
+    
+    static void copy(Data d){ //입력받는 참조변수는 Data d
+        Data tmp = new Data(); //Data의 객체 tmp 생성
+        tmp.x= d.x; //tmp.x에다가 d.x를 저장 
+        
+        return tmp; //Data의 객체 tmp를 Data의 객체d2에다가 저장. ->메인함수에 반영 반환하는값이 Data객체의 주소이므로 반환타입이 'Data'인 것이다.
+    }
+}
