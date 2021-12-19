@@ -1,0 +1,99 @@
+//오버로딩:클래스 내에 같은 이름의 메서드를 여러 개 구현하는 것을 메서드 오버로딩 즉 오버로딩이라고한다.
+//메서드 이름이 같지만 매개변수의 개수 또는 타입이 달라야 한다.
+
+
+//예를 들어 PrintStreaam에는 우리가 무슨 타입의 변수를 출력을 해도 알아서 받아서 처리되는데 println안에 10가지 println 메서드가있다.
+//예제를 살펴보자
+//ex1
+    int add(int a,int b) { return a + b; }
+    int add(int x,int y) { return x + y; }
+    //이것은 오버로딩이 아니다. 메서드 이름이 같지만 매개변수의 개수와 타입이 똑같다. f(x) = x + 1 , f(a) = a + 1 이라고 표시한 것과 동일하다.
+    
+//ex2
+    int add(int a , int b) { return a + b; }
+    long add(int a, int b) { return(long) (a+b); }
+    //이 경우는 리턴타입만 다른 경우이다. 매개변수의 타입과 개수가 일치하기 때문에 add(3,3)과 같이 호출하였을때 어떤 메서드가 호출된 것인지 결정할 수 없기 때문에 오버로딩이 아니다.
+    //메서드 이름은 같더라도 구분이 되어야한다.
+
+//ex3 
+    long add(int a, long b) { return a + b; }
+    long add(long a, int b) { return a + b; }
+    //두 메서드 모두 int형과 long형 매개변수가 하나씩 선언되어 있지만, 서로 순서가 다른 경우다. 호출 시 매개변수의 값에 의해 호출될 메서드가 있으므로 중복된 메서드 정의가 아닌,
+    //오버로딩으로 간주한다 . 단 add(3,3)을 호출할 시 두 개 중에 뭐가 출력될지 선택하지 못하기 때문에 메서드를 호출하는 곳에서 컴파일 에러가 발생한다.
+    
+    
+// 오버로딩의 장점 위에서 말한 println을 타입마다 10가지나 만들게 됬다면 사용자의 혼란과 귀차니즘을 유발할 수 있기 때문에 이것이 장점이라고 할 수 있다. + 메서드의 이름 절약
+
+//예제 하나를 살펴보자.
+
+class OverloadingTest{
+    public static void main(String [] args){
+      MyMath3 mm = new MyMath3();
+      System.out.println("mm.add(3,3) 결과: " + mm.add(3,3));
+      System.out.println("mm.add(3L,3) 결과: " + mm.add(3L,3));
+      System.out.println("mm.add(3,3L) 결과: " + mm.add(3,3L));
+      System.out.println("mm.add(3L,3L) 결과: " + mm.add(3L,3L));
+      
+      int [] a = { 100,200,300 };
+      System.out.println("mm.add(a) 결과 : " + mm.add(a));
+   }
+}
+
+class MyMath3{
+    int add(int a,int b){
+        System.out.print("int add(int a,int b) - ");
+        return a+b;
+    }
+    long add(int a,long b){
+        System.out.print("long add(int a,long b) - ");
+        return a+b;
+    }
+    long add(long a,int b){
+        System.out.print("long add(long a,int b) - ");
+        return a+b;
+    }
+    long add(long a,long b){
+        System.out.print(" long add(long a,long b) - ");
+        return a+b;
+    }
+    
+    int add(int [] a){ //배열의 모든 요소의 합을 결과로 돌려준다.
+        System.out.print("int add(int [] a) - ");
+        int result = 0;
+        for(int i = 0;i<a.length;i++){
+            result +=a[i];
+        }
+        return result;
+    }
+}
+
+//p.s  output이 add메서드에 있는 프린트가 먼저 출력이 되는 결과값이 나올텐데 그 이유는 add를 실행해서 프린트안의 값에다가 넣어서 출력하는거기 때문에 add메서드가 먼저 실행된다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
