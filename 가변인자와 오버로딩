@@ -1,0 +1,35 @@
+//가변인자란? 기존에 메서드들은 매개변수가 고정적이었지만 동적으로 지정해줄 수 있는기능임. 이걸 "가변인자"라고 부른다.
+//가변인자는 타입... 변수명 과 같은 형식으로 선언하며, PrintStream클래스의 printf()가 대표적인 예이다.
+//주의사항 !! : 가변인자는 매개변수 중에서 제일 마지막에 선언해야 한다.
+//ex) public PrintStream printf(String format, Object ... args) { ... } -> O
+//ex) public PrintStream printf(Object ... args , String format) { ... } -> X (오류가 발생하는것이다.)
+
+class VarArgsEx{
+    public static void main(String [] args){
+        String [] strArr = {"100","200","300"};
+        
+        System.out.println(concatenate("","100","200","300"));
+        System.out.println(concatenate("-",strArr));
+        System.out.println(concatenate(",",new String[] ({ "1","2","3"}));
+        System.out.println("[" + concatenate(",",new String[0]) + "]");
+        System.out.println("[" + concatenate(",") + "]");
+ }
+ 
+ static String concatenate(String delim, String ... args){
+    String result = "";
+    
+    for(String str: args){
+        result += str + delim; //향상된 for문 ( 타입 변수명: 배열 또는 컬렉션 ) 첫번째 문자열 출력후 + delim + 두번째 문자열 출력후 + delim ~~ 
+    }
+    
+    return result; //result문자열에 for문에서 문자열을 다 이어줬기 때문에 return 해서 원래 println문에서 호출한 concatenate메서드를 종료하고 출력.
+    
+}
+
+/*
+    static String concatenate(String ... args){
+        return concatenate("",args); //이 주석처리를 풀고 실행하게 되면 concatenate라는 메서드를 호출할 때 오버로딩이 되지 않고 오류가 발생한다. 왜냐하면 가변인자가 있기 때문에 구별을
+    }                                //잘 못하게 된다. 그렇기 때문에 가변인자를 사용한 메서드는 오버로딩하지 않는 것이 좋다.
+*/
+
+}//class
