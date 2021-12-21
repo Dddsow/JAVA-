@@ -1,0 +1,246 @@
+//생성자란? : 인스턴스가 생성될 때 호출되는 인스턴스 초기화 메서드이다.  인스턴스 변수의 초기화 작업에 주로 사용되며, 인스턴스 생성 시에 실행되야할 작업을 위해 사용된다.
+//생성자 또한 메서드처럼 클래스 안에 선언되며, 리턴값이 없다는 점이 다르다. 생성자 앞에 뜻하는 키워드 void를 사용하진 않고 , 그냥 아무것도 적지 안흔ㄴ다.
+//[생성자의 조건] 1.생성자의 이름은 클래스의 이름과 같아야 한다. 2.생성자는 리턴 값이 없다.
+//생성자도 오버로딩 가능.
+
+//ex1 생성자의 정의
+클래스이름 (타입 변수명,타입 변수명, --- ){
+    //인스턴스 생성 시 수행될 코드,
+    //주로 인스턴스 변수의 초기화 코드를 적는다.
+}
+
+class Card{
+    Card() {  //매개변수가 없는 생성자.
+        ---
+    }
+    
+    Card(String k,int num){ //매개변수가 있는 생성자.
+        ---
+    }
+    ---
+}
+
+//연산자 new가 인스턴스를 생성하는 것이지 생성자가 인스턴스를 생성하는 것이 아니다. 생성자가 갖는 몇 가지 특징만 제외하면 메서드와 다른 게 없다.
+
+Card c = new Card();
+
+//1.연산자 new에 의해서 메모리(heep)에 Card클래스의 인스턴스가 생성된다.
+//2.생성자 Card()가 호출되어 수행된다.
+//3.연산자 new의 결과로, 생성된 Card인스턴스의 주소가 반환되어 참조변수c에 저장된다.
+
+//기본생성자 ==========================
+//모든 클래스엔 반드시 하나 이상의 생성자가 정의되어 있어야 하지만 컴파일러가 컴파일 할 때 클래스에 생성자가 하나도 정의되지 않은 경우에 컴파일러는 자동적으로 기본생성자를 추가한다.
+//예제를 봐보자
+//ex2
+
+class Data1{
+  int value;
+}
+
+class Data2{
+  int value;
+  
+  Data2(int x){
+    value = x;
+  }
+}
+
+class ConstuctorTest{
+    public static void main(String [] args){
+        Data1 d1 = new Data1();
+        Data2 d2 = new Data2();  //컴파일 에러가 발생한다. why? -> Data1의 클래스에는 생성자가 없기 때문에 자동적으로 컴파일러가 기본생성자를 추가해줬지만 
+                                 //Data2엔 생성자 Data2(int x)가 존재하기 때문이다. 양식에 맞추지 않았기 때문이다.
+    }
+}
+
+//Data2 d2 = new Data2(10); // 이렇게 매개변수를 넣어 양식에 맞춰 작성하게 되면 오류가 발생하지 않는다.
+//기본생성자가 컴파일러에 의해서 추가되는 경우는 클래스에 정의된 생성자가 하나도 없을 때 뿐이다라는 걸 기억하자.
+
+//매개변수가 있는 생성자 ==============================================
+class Car{
+    String color;   //색상
+    String gearType; //변속기 종류 - auto , manual
+    int door; //문의 개수
+    
+    Car(){} //매개변수가 없는 생성자
+    Car(String c,String g,int d){   //매개변수가 있는 생성자
+        color = c;
+        gearType = g;
+        door = d;
+    }
+}
+
+//인스턴스를 생성한 다음에 인스턴스변수의 값을 변경하는 것보다 매개변수를 갖는 생성자를 사용하는 것이 코드를 보다 간결하고 직관적으로 만들기 때문에 매개변수를 갖춰 생성자를 생성하는게 좋다.
+
+Car c = new Car();
+c.color = "white";         -->>     Car c = new Car("white","auto",4);
+c.gearType = "auto";       -->>
+c.door = 4;
+
+//예제
+class Car{
+    String color;   //색상
+    String gearType; //변속기 종류 - auto , manual
+    int door; //문의 개수
+    
+    Car(){} //매개변수가 없는 생성자
+    Car(String c,String g,int d){   //매개변수가 있는 생성자
+        color = c;
+        gearType = g;
+        door = d;
+    }
+}
+class CarTest{
+    public static void main(String [] args){
+        Car c1 = new Car(); //c1은 인스턴스의 값을 생성하고 인스턴스변수들을 따로 초기화 해줘야하는 Car()생성자를 사용했다.
+        c1.color = "white";
+        c1.gearType = "auto";
+        c1.door = 4;
+        
+        Car c2 = new Car("white","auto",4); //c2는 인스턴스를 생성하는 동시에 원하는 값으로 초기화를 할 수 있었다. Car(String c,String g,int d)매개변수가 있는 생성자를 사용하여 
+                                            //훨씬 간결하게 표현할 수 있다.
+        System.out.println(" c1의 color = " + c1.color + " c1의 gearType = " + c1.gearType + " , c1의 door = " + c1.door );
+        System.out.println(" c2의 color = " + c2.color + " c2의 gearType = " + c2.gearType + " , c2의 door = " + c2.door );
+        
+        }
+ }
+ 
+ //생성자에서 다른 생성자 호출하기 this(),this==========================================
+ //[this 사용조건]
+ //1.생성자의 이름으로 클래스이름 대신 this를 사용한다.
+ //2.한 생성자에서 다른 생성자를 호출할 때는 반드시 첫 줄에서만 호출이 가능하다.
+ 
+ //[this 예제]
+ 
+ class Car{
+    String color;   //색상
+    String gearType; //변속기 종류 - auto , manual
+    int door; //문의 개수
+    
+    Car(){
+        this("white","auto",4); //Car(String color,String gearType,int door)를 호출한 것과 똑같다. 단 생성자끼리 호출할 때 this를 사용하기 떄문에 Car대신 this를 사용.
+    }
+    Car(String color){
+        this(color,"auto",4);
+    }    
+    Car(String color,String gearType,int door){   //매개변수가 있는 생성자
+        this.color = color;     //this는 참조변수로 인스턴스 자신을 가리킨다. +추가적으로 static(클래스 메서드)에선 this 역시 사용할 수 없다.
+        this.gearType = gearType;
+        this.door = door;
+    }
+}
+
+class CarTest2{
+    public static void main(String [] args){
+        Car c1 = new Car();
+        Car c2 = new Car("blue");
+        
+        System.out.println(" c1의 color = " + c1.color + " c1의 gearType = " + c1.gearType + " , c1의 door = " + c1.door );
+        System.out.println(" c2의 color = " + c2.color + " c2의 gearType = " + c2.gearType + " , c2의 door = " + c2.door );
+    }
+}
+
+ //생성자를 이용한 인스턴스의 복사 ==========================================================
+ //두 인스턴스가 같은 상태를 갖는다는 것 = 두 인스턴스의 모든 인스턴스 변수가 동일한 값을 갖고 있다는 것을 뜻한다.
+ 
+ Car(Car c){
+    color = c.color;
+    gearType = c.gearType;
+    door = c.door;
+ }
+ 
+ //Car클래스의 참조변수를 매개변수로 선언한 생성자이다. 매개변수로 넘겨진 참조변수가 가리키는 Car인스턴스의 인스턴스변수인 color,gearType,door의 값을 인스턴스 자신으로 복사하는 것이다.
+ 
+ //인스턴스 복사 예제
+class Car{
+    String color;   //색상
+    String gearType; //변속기 종류 - auto , manual
+    int door; //문의 개수
+    
+    Car(){
+        this("white","auto",4); //Car(String color,String gearType,int door)를 호출한 것과 똑같다. 단 생성자끼리 호출할 때 this를 사용하기 떄문에 Car대신 this를 사용.
+    }
+    Car(Car c){
+        color = c.color;
+        gearType = c.gearType; //-> Car(Car c) this(c.color,c.gearType,c.door); //다른생성자 Car(String color,String gearType,int door)를 호출하는 것이 바람직.
+        door = c.door;         //"무작정 새로 코드를 작성하는 것보다 기존의 코드를 잘 활용할 수 있는지 고민하자! 
+    }    
+    Car(String color,String gearType,int door){   //매개변수가 있는 생성자
+        this.color = color;     //this는 참조변수로 인스턴스 자신을 가리킨다. +추가적으로 static(클래스 메서드)에선 this 역시 사용할 수 없다.
+        this.gearType = gearType;
+        this.door = door;
+    }
+}
+ class CarTest2{
+    public static void main(String [] args){
+        Car c1 = new Car();
+        Car c2 = new Car(c1); //c1의 복사본 c2를 생성한다.
+        
+        System.out.println(" c1의 color = " + c1.color + " c1의 gearType = " + c1.gearType + " , c1의 door = " + c1.door );
+        System.out.println(" c2의 color = " + c2.color + " c2의 gearType = " + c2.gearType + " , c2의 door = " + c2.door );
+        
+        c1.door = 100; //c1의 인스턴스변수 door의 값을 변경한다.
+        System.out.println("c1.door=100; 수행 후");
+        System.out.println(" c1의 color = " + c1.color + " c1의 gearType = " + c1.gearType + " , c1의 door = " + c1.door );
+        System.out.println(" c2의 color = " + c2.color + " c2의 gearType = " + c2.gearType + " , c2의 door = " + c2.door );
+        
+        //인스턴스 c2는 c1을 복사하여 생성된 것이므로 서로 같은 상태를 갖지만, 서로 독립적으로 메모리공간에 존재하는 별도의 인스턴스이므로 c1의 값들이 변경되어도 c2는 영향을 받지 않는다.
+        
+        
+        
+    }
+}
+ 
+//인스턴스를 생성할 때는 다음의 2가지 사항을 결정해야한다.
+//1.클래스 - 어떤 클래스의 인스턴스를 생성할 것인가?
+//2.생성자 - 선택한 클래스의 어떤 생성자로 인스턴스를 생성할 것인가? -> 이 두가지를 생각하자!
+//"무작정 새로 코드를 작성하는 것보다 기존의 코드를 잘 활용할 수 있는지 고민하자!         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
