@@ -154,9 +154,97 @@ class Triangle extends Shape{
     }
 }
     
+//====================================================================================예제2
+
+class DeckTest{
+        public static void main(String args[]){
+                Deck d = new Deck(); //덱생성
+                Card c = d.pick(0); // pick(int index 호출) 섞기 전 제일 처음의 카드를 뽑음 섞기전 첫 번째 카드는 new Card(4,1) -> SPADE 1 그러면 이게 Card c = new Card(k,n+1)이 된다. 처음이니까 4,1
+                System.out.println(c); //System.out.println(c.toString()); 과 같다 //SPADE , 1 
+                
+                d.shuffle(); //카드를 섞는다
+                c = d.pick(0); //섞은 후에 제일 위에 카드를 뽑는다.
+                System.out.println(c); //System.out.println(c.toString()); 과 같다 // 참조변수의 출력이나 덧셈연산자를 이용한 참조변수와 문자열의 결합에는 toString()이 자동적으로 호출되어 참조변수를 문자열로 대치한 후 처리한다.
+           }
+}
     
+class Deck {
+        
+        final int CARD_NUM = 52;
+        Card cardArr[] = new Card[CARD_NUM];
+        
+        Deck() {
+            int i = 0;
+            
+            for(int k = Card.KIND_MAX; k > 0 ; k--) //KINDMAX = 4 
+                for(int n=0; n<Card.NUM_MAX ; n++) //NUMMAX= 13
+                    cardArr[i++] = new Card(k,n+1); //cardArr에 Card의 객체 new Card(k,n+1)을 넣음. 예를 들면, cardArr[0] = new Card(4,1)이다.
+        }
+        
+        Card pick(int index){
+                return cardArr[index]; // 카드 덱에 있는 1차원배열 0-51중에 index값에 따라 cardArr출력 카
+        }
+        Card pick() {
+            int index = (int)(Math.random() *  CARD_NUM); //카드 하나를 무작위로 선택한다
+            return pick(index);
+        }
+        void shuffle(){ //카드의 순서를 섞는다
+           
+            for(int i = 0; i < cardArr.length ; i++){
+                int r = (int)(Math.random() * CARD_NUM);
+                
+                Card temp = cardArr[i];
+                cardArr[i] = cardArr[r];
+                cardArr[r] = temp;
+            }
+        }
+} //Deck 클래스의 끝
+
+class Card {
+    static final int KIND_MAX = 4; //카드 무늬의 수
+    static final int NUM_MAX = 13; //무늬별 카드 수
     
+    static final int SPADE = 4;
+    static final int DIAMOND = 3;
+    static final int HEART = 2;
+    static final int CLOVER = 1;
+    int kind;
+    int number;
     
+    Card(){
+        this(SPADE,1);
+    }
+    
+    Card(int kind,int number){
+         this.kind = kind;
+         this.number = number;
+    }
+    
+    public String toString(){
+            String[] kinds = { "","CLOVER","HEART","DIAMOND","SPADE" };
+            String numbers = "0123456789XJQK" ;
+            
+            return "kind : " + kinds[this.kind] + ",number : " + numbers.charAt(this.number);
+    }//toString()의 끝
+} //Card클래스의 끝
+            
+            
+    
+   
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
     
     
           
