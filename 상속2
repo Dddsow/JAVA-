@@ -1,0 +1,326 @@
+//단일 상속
+//"단일 상속이란?" -> 하나의 조상 클래스를 가지는 것을 말한다. 
+// C++에서는 여러 조상 클래스로부터 상속받는 것이 가능한 다중상속을 허용하지만 "JAVA"에서는 단일 상속만 허용한다.
+// 예를 들어, TV클래스와 VCR클래스가 있을 때 , 이 두 클래스로부터 상속을 받는 TVCR클래스를 작성할 수 없다.
+
+//class TVCR extends TV,VCR -> //에러 다중상속이 안된다.
+
+class Tv{
+    boolean power;
+    int channel;
+    
+    void power() { power = !power; }
+    void channelUp() { ++channel; }
+    void channelDown() { --channel; }
+}
+
+class VCR{
+    boolean power;
+    int counter = 0;
+    void power() { power = !power; }
+    void play() { //내용 }
+    void stop(){ //내용 }
+    void rew(){ //내용 }
+    void ff() { //내용 }
+}
+
+class TVCR extends Tv{
+    VCR vcr = new VCR();
+    
+    void play() {
+        vcr.play();
+    }
+    void stop() {
+        vcr.stop();
+    }
+    void rew() {
+        vcr.rew();
+    }
+    void ff() {
+        vcr.ff();
+    }
+}
+//다중상속을 허용하지 않아서 Tv클래스를 조상으로 하고, VCR클래스는 TVCR클래스에 포함시켰다. VCR클래스의 인스턴스를 생성해서 사용하는 것이다. 
+//이렇게 함으로써 VCR클래스의 메서드의 내용이 변경도더라도 TVCR클래스의 메서드를 역시 변경된 내용이 적용되는 결과를 얻을 수 있을 것이다.
+
+//Object클래스 - 모든 클래스의 조상
+//object클래스는 모든 클래스 상속계층도의 최상위에 있는 조상클래스이다.
+// class Tv { --- } -> class Tv extends Object { --- } 자동적으로 ' extends Object '를 추가하여 Tv클래스가 Object클래스로부터 상속받도록 한다.
+//이미 어떤 클래스로부터 상속받도록 작성된 클래스에 대해서는 컴파일러가 'extends Object'를 추가하지 않는다.
+//그동안 toString() equals(Object o)와 같은 메서드를 따로 정의하지 않고도 사용할 수 있었던 이유는 이 메서드들이 Object클래스에 정의된 것들이기 떄문이다.
+
+
+//[오버라이딩]===================================================================================================================================
+//"오버라이딩이란" -> 조상클래스로부터 상속받은 메서드의 내용을 변경하는 것을 오버라이딩이라고 한다.
+
+class Point {
+      int x;
+      int y;
+      
+      String getLocation(){
+            return "x :" + x + ", y : "+ y;
+      }
+}
+class Point3D extends Point{
+      int z;
+      
+      String getLocation(){ //오버라이딩
+          return "x :" + x + ", y : "+ y + ", z: " + z;
+      }
+}
+
+//오버라이딩의 조건
+
+//1.이름이 같아야 한다.
+//2.매개변수가 같아야 한다.
+//3.반환타입이 같아야 한다.
+
+//->한 마디로 선언부가 서로 일치해야 한다는 것이다.
+//BUT , 접근 제어자와 예외는 제한된 조건 하에서만 다르게 변경할 수 있다.
+
+//1.접근 제어자는 조상 클래스의 메서드보다 좁은 범위로 변경 할 수 없다.
+//조상클래스의 접근 제어자가 protected라면 , 이를 오버라이딩 하는 자손클래스의 메서드는 접근 제어자가 public,protected여야한다. 
+//[접근제어자의 접근범위] ->> 넓은 것에서 좁은 순서대로 public ,  protected , (default) , private 이다.
+//2.조상 클래스의 메서드보다 많은 수의 예외를 선언할 수 없다.
+class Parent {
+      void parentMethod() throws IOException , SQLException{
+          ---
+      }
+}
+class Child extends Parent{
+      void parentMethod() throws IOException{
+          ---
+      }
+}
+//"주의해야할 점" 단순히 선언된 예외의 개수가 문제가 아니다. ->그렇다면? 
+//예를 들어 class Child extends Parent{
+      void parentMethod() throws Exception{ //-> Exception은 모든 예외의 최고 조상이므로 가장 많은 개수의 예외를 던질 수 있도록 설정한 것이다. 그래서 잘못된 오버라이딩이다.
+          ---
+       }
+}
+
+//+인스턴스 메서드를 static메서드로 또는 그 반댈 변경할 수 없다. static메서드에서 인스턴스메서드로 변경 x.
+
+
+//오버로딩 vs 오버라이딩
+//오버로딩은 기존에 없는 새로운 메서드를 추가하는 것이다 . 매개변수의 개수 또는 타입이 달라야 한다.
+//오버라이딩은 상속받은 메서드의 내용을 변경하는 것이다 .
+
+class Parent {
+      void parentMethod() {}
+}
+class Child extends Parent{
+      void parentMethod(){} //오버라이딩
+      void parentMethod(int i) {} //오버로딩
+      
+      void childMethod(){}
+      void childMethod(int i) {} //오버로딩
+      void childMethod() {} //에러. 중복정의되었음.
+}
+//  [super] =============================================
+
+//super은 자손 클래스에서 조상 클래스로부터 상속받은 멤버를 참조하는데 사용되는 참조변수이다.
+//멤버변수와 지역변수의 이름이 같을 때 this를 붙여서 구별했듯이 상속받은 멤버와 자신의 멤버와 이름이 같을 때는 super를 붙여서 구별할 수 있다.
+//super.멤버변수를 하게되면 조상클래스의 멤버변수의 값이 호출된다.
+
+class SuperTest{
+    public static void main(String args []) {
+        Child c = new Child();
+        c.method();
+    }
+}
+
+class Parent{
+    int x = 10;
+}
+
+class Child extends Parent {
+      void method(){
+        System.out.println("x=" +x);
+        System.out.println("this.x=" +this.x);
+        System.out.println("super.x=" +super.x);
+      }
+} // 전부 다 같은 값임 this.x는 조상클래스에 있는 멤버변수를 상속받았으므로 Child에서 매개변수 x를 호출한 것
+
+class SuperTest2{
+    public static void main(String args []) {
+        Child c = new Child();
+        c.method();
+    }
+}
+
+class Parent{
+    int x = 10;
+}
+
+class Child extends Parent {
+      int x = 20;
+      
+      void method(){
+        System.out.println("x=" +x);
+        System.out.println("this.x=" +this.x);
+        System.out.println("super.x=" +super.x);
+      }
+} // -> 이것은 x는 20 this.x도 20 super.x는 10 
+
+class Point {
+      int x;
+      int y;
+      
+      String getLocation(){
+            return "x :" + x + ", y : "+ y;
+      }
+}
+class Point3D extends Point{
+      int z;
+      
+      String getLocation(){ //오버라이딩
+          return super. getLocation() + ", z: " + z; //조상의 메서드 호출 //조상클래스의 메서드의 내용에 추가적으로 작업을 덧붙이는 경우라면 
+      }                                              //이처럼 super을 사용해서 조상클래스의 메서드를 포함시키는 것이 좋다.
+}
+
+//super() - 조상 클래스의 생성자
+
+
+//Object클래스를 제외한 모든 클래스의 생성자 첫 줄에 생성자,this() 또는 super()를 호출해야 한다. 그렇지 않으면 컴파일러가 자동적으로 'super();'를 생성자의 첫 줄에 삽입한다.
+
+class PointTest{
+    public static void main(String args[]){
+        Point3D p3 = new Point3D(1,2,3);
+    }
+}
+
+class Point {
+    int x, y;
+    
+    Point(int x,int y){
+        this.x = x;
+        this.y = y;
+    }
+    
+    String getLocation(){
+        return "x : " + x + " , y : " + y;
+    }
+}
+
+class Point3D extends Point{
+      int z;
+      
+      Point 3D(int x,int y,int z){
+            //생성자 첫 줄에서 다른 생성자를 호출하지 않기 때문에 컴파일러가 'super();'를 여기에 삽입한다. super()은 Point3D의 조상인 Point클래스의 기본 생성자인 Point()를 의미한다.
+            //하지만 에러발생 왜냐면 조상클래스인 Point에 Point()생성자가 없기 때문이다.->Point()생성자를 생성해주던가 아니면 super(x,y)를 첫 줄에 쓰던지
+            //생성자가 정의되어 있는 컴파일러에는 컴파일러가 기본 생성자를 추가해주지 않는다. 
+            this.x = x;
+            this.y = y;
+            this.z = z;
+      }
+      
+      String getLocation(){
+          return "x : " + x + " , y : " + y + " , z: " + z;
+      }
+}
+
+//===============
+
+class PointTest2{
+    public static void main(String args[]){
+        Point3D p3 = new Point3D();
+        System.out.println("p3.x=" + p3.x);
+        System.out.println("p3.y=" + p3.y);
+        System.out.println("p3.z=" + p3.z);
+    }
+}
+
+class Point {
+    int x = 10;
+    int y = 20;
+    
+    Point(int x,int y){
+        //super(); -> Object()를 의미한다. 상속받은게 없으므로
+        this.x = x;
+        this.y = y;
+    }
+    
+
+
+class Point3D extends Point{
+      int z = 30;
+      
+      Point 3D(){
+            this(100,200,300); // Point 3D(int x,int y,int z)를 호출한다.
+      }
+      
+      Point 3D(int x,int y,int z){
+          super(x,y); //Point(x,y)를 호출한다.
+          this.z = z;
+      }
+}
+//진행되는 순서 Point3D p3 -> Point 3D(int x,int y,int z) -> Point(x,y) -> Object() 
+//이로 인해 어떤 클래스의 인스턴스를 생성하면, 클래스의 상속관계의 최고조상인 Object클래스까지 거슬러 올라가면서 모든 조상클래스의 생성자가 순서대로 호출된다는 것을 알 수 있다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
