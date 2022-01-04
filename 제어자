@@ -51,7 +51,7 @@ class Card{
 class FinalCardTest{
     publi static void main(String args[]){
         Card c = new Card("HEART",1);
-        c.NUMBER = 5;
+        c.NUMBER = 5; //->오류 final이 붙은 상수의 값이기 때문이다. 생성자에서 매개변수로 받아 처음에 초기화할 수 있지만 이렇게 참조변수로 다시 끌고와 하는건 안된다. 오류임
         System.out.println(c.KIND);
         System.out.println(c.NUMBER);
         System.out.println(c);  //System.out.println(c.toString());이랑 같다.
