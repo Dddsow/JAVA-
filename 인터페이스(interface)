@@ -66,22 +66,22 @@ class FighterTest {
           System.out.println("f는 Unit클래스의 자손입니다.");
           
       if(f instacneof Fightable)
-          System.out.println("f는 Unit클래스의 자손입니다.");
+          System.out.println("f는 Fightable클래스의 자손입니다.");
           
       if(f instacneof Movable)
-          System.out.println("f는 Unit클래스의 자손입니다.");
+          System.out.println("f는 Movable클래스의 자손입니다.");
       
       if(f instacneof Attackable)
-          System.out.println("f는 Unit클래스의 자손입니다.");
+          System.out.println("f는 Attackable클래스의 자손입니다.");
       
       if(f instacneof Object)
-          System.out.println("f는 Unit클래스의 자손입니다.");
+          System.out.println("f는 Object클래스의 자손입니다.");
       }
 }
 
 class Fighter extends Unit implements Fightable {
-    public void move(int x,int y){ }
-    public void attack(Unit u){ }
+    public void move(int x,int y){ }    //오버라이딩을 할 때는 조상의 메서드보다 넓은 범위의 접근 제어자를 지정해야 한다는 것을 기억할 것이다.
+    public void attack(Unit u){ }       //Movable인터페이스에 실제로 ' public abstract ' 가 생략된 것이기 때문에 반드시 'public'이라고 해줘야 한다.
 }
 
 class Unit {
@@ -94,9 +94,73 @@ interface Fightable extends Movable , Attackable {}
 interface Movable { void move(int x, int y); }
 interface Attackable { void attack(Unit u); }
 
+//인터페이스를 이용한 다중상속
 
+public class Tv {
+        protected boolean power;
+        protected int channel;
+        protected int volume;
+        
+        public void power() { power =! power; }
+        public void channelUp() { channel ++; }
+        public void channelDown() { channel --; }
+        public void volumeUp() { volume++; }
+        public void volumeDown() { volume--; }
+}
 
+public class VCR{
+        protected int counter;
+        
+        public void play(){
+            vcr.play();
+        }
+        public void stop(){
+            vcr.stop();
+        }
+        public void reset(){
+            vcr.rest();
+        }
+        public int getCounter(){
+            return vcr.getCounter();
+        }
+        public void setCounter(int c){
+            vcr.setCounter(c);
+        }
+}
 
+public interface IVCR{
+        public void play();
+        public void stop();
+        public void reset();
+        public int getCounter();
+        public void setCounter(int c);
+}
+
+public class TVCR extends Tv implements IVCR{
+    VCR vcr = new VCR();
+    
+      protected int counter;
+        
+        public void play(){
+            vcr.play();
+        }
+        public void stop(){
+            vcr.stop();
+        }
+        public void reset(){
+            vcr.reset();
+        }
+        public int getCounter(){
+               return vcr.getCounter();
+        }
+        public void setCounter(int c){
+            vcr.setCounter(c);
+        }
+}
+
+//Tv클래스와 VCR클래스가 있을 때, TVCR클래스를 작성하기 위해 다중상속은 허용이 안되니까 한 쪽만 선택하여 상속받고 나머지 한 쪽은 클래스 내에 포함시켜서 내부적으로 인스턴스를 생성해서 사용.
+
+//인터페이스를 이용한 다형성
 
 
 
