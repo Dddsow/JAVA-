@@ -162,7 +162,55 @@ public class TVCR extends Tv implements IVCR{
 
 //인터페이스를 이용한 다형성
 
+//인터페이스 또한 이를 구현한 클래스의 조상이라 할 수 있으므로 해당 인터페이스 타입의 참조변수로 이를 구현한 클래스의 인스턴스를 참조할 수 있다.
 
+
+Fightable f = (fightable)new Fighter();
+Fightable f = new Fighter();
+
+//따라서 인터페이스는 다음과 같이 메서드의 매개변수의 타입으로 사용될 수 있다.
+void attack(Fightable f){
+    //...
+}
+
+class Fighter extends Unit implements Fightable{
+        public void move(int x,int y){ }
+        public void attack(Fightable f){ }
+}
+
+
+//+ 메서드의 리턴타입으로 인터페이스의 타입을 지정하는 것 역시 가능하다.
+
+Fightable method(){
+    Fighter f = new Fighter();
+    return f;           //return new Fighter();
+}
+
+//**리턴타입이 인터페이스라는 것은 메서드가 해당 인터페이스를 구현한 클래스의 인스턴스를 반환한다는것을 의미한다.** 이 문장은 외울때까지 숙달하자!
+
+interface Parseable{
+        //구문 분석작업을 수행한다.
+        public abstract void parse(String fileName);
+}
+class ParserManager{
+        //리턴타입이 Parseable인터페이스이다.
+        public static Parseable getParser(String type){
+                if(type.equals("XML")){
+                    return new XMLParser();
+                }
+                else{
+                    Parseable p = new HTMLParser();
+                    return p;
+                    // return new HTMLParser();
+                }
+        }
+ }
+ class XTML
+ //쓰다말음.
+ 
+ 
+ 
+ ///
 
 
 
